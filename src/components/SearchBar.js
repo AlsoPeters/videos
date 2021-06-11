@@ -1,39 +1,33 @@
-import { useState } from 'react';
-import { Form, Input } from 'rsuite';
+import React from 'react';
 
-function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+class SearchBar extends React.Component {
+  state = { term: '' };
 
-  let handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
+  onInputChange = (event) => {
+    this.setState({ term: event.target.value });
   };
 
-  let onFormSubmit = (event) => {
-    // event.preventDefault();
-    // TODO: call callback from parent component
+  onFormSubmit = (event) => {
+    event.preventDefault();
+    this.props.onFormSubmit(this.state.term);
   };
 
-  return (
-    <div className='search-bar ui segment'>
-      <Form onSubmit={onFormSubmit} className='ui form'>
-        <div className='field'>
-          <label>Video Search</label>
-          <Input
-            value={searchTerm}
-            onChange={(value, event) => {
-              handleInputChange(event);
-              console.log(value, event);
-            }}
-            type='text'
-          />
-        </div>
-      </Form>
-    </div>
-  );
+  render() {
+    return (
+      <div className='search-bar ui segment'>
+        <form onSubmit={this.onFormSubmit} className='ui form'>
+          <div className='field'>
+            <label>Video Search</label>
+            <input
+              type='text'
+              value={this.state.term}
+              onChange={this.onInputChange}
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
 }
 
 export default SearchBar;
-
-// FORM ELEMENT
-// LABEL
-// TEXT INPUT
